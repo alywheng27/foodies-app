@@ -1,13 +1,27 @@
 import React from 'react'
 import Link from 'next/link'
+import styles from './page.module.css'
+import MealsGrid from '@/components/meals/meals-grid'
+import { getMeals } from '@/lib/meals'
 
-export default function Meals() {
+export default async function Meals() {
+  const meals = await getMeals()
+
   return (
-    <main>
-        <h1>Our Meals</h1>
-        <p><Link href="/meals/item-1">Item 1</Link></p>
-        <p><Link href="/meals/item-2">Item 2</Link></p>
-        <p><Link href="/meals/share">Share</Link></p>
-    </main>
+    <>
+      <header className={styles.header}>
+        <h1>Delecious meals, created <span className={styles.highlights}>by you</span></h1>
+        <p>Choose your recipe and cook it yourself. It is easy and fun!</p>
+        <p className={styles.cta}>
+          <Link href="/meals/share">
+            Share Your Favorite Recipe
+          </Link>
+        </p>
+      </header>
+      <main className={styles.main}>
+        <MealsGrid meals={meals} />
+      </main>
+    </>
+    
   )
 }
